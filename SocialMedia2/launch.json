@@ -6,50 +6,34 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Launch Current File",
+            "name": "Current File",
             "request": "launch",
-            "vmArgs": "--module-path \"C:/JavaFX/javafx-sdk-17.0.14/lib\" --add-modules javafx.controls,javafx.fxml",
+            "vmArgs": "--module-path C:/JavaFX/javafx-sdk-24/lib --add-modules javafx.controls,javafx.web --add-exports javafx.graphics/com.sun.javafx.sg.prism=ALL-UNNAMED",
             "mainClass": "${file}"
         },
         {
             "type": "java",
-            "name": "Launch Driver",
+            "name": "Driver",
             "request": "launch",
-            "vmArgs": "--module-path \"C:/JavaFX/javafx-sdk-17.0.14/lib\" --add-modules javafx.controls,javafx.fxml",
+            "vmArgs": "--module-path C:/JavaFX/javafx-sdk-24/lib --add-modules javafx.controls,javafx.web --add-exports javafx.graphics/com.sun.javafx.sg.prism=ALL-UNNAMED",
             "mainClass": "Driver",
-            "projectName": "socialmedia_b2b82db6"
+            "projectName": "SocialMedia_8c47803c"
         },
         {
             "type": "java",
-            "name": "Launch FinalGUI",
+            "name": "HelloGUI",
             "request": "launch",
-            "vmArgs": "--module-path \"C:/JavaFX/javafx-sdk-17.0.14/lib\" --add-modules javafx.controls,javafx.fxml",
-            "mainClass": "FinalGUI",
-            "projectName": "socialmedia_b2b82db6"
-        },
-        {
-            "type": "java",
-            "name": "Launch GUI",
-            "request": "launch",
-            "vmArgs": "--module-path \"C:/JavaFX/javafx-sdk-17.0.14/lib\" --add-modules javafx.controls,javafx.fxml",
-            "mainClass": "GUI",
-            "projectName": "socialmedia_b2b82db6"
-        },
-        {
-            "type": "java",
-            "name": "Launch HelloGUI",
-            "request": "launch",
-            "vmArgs": "--module-path \"C:/JavaFX/javafx-sdk-17.0.14/lib\" --add-modules javafx.controls,javafx.fxml",
+            "vmArgs": "--module-path C:/JavaFX/javafx-sdk-24/lib --add-modules javafx.controls,javafx.web --add-exports javafx.graphics/com.sun.javafx.sg.prism=ALL-UNNAMED",
             "mainClass": "HelloGUI",
-            "projectName": "socialmedia_b2b82db6"
+            "projectName": "SocialMedia_8c47803c"
         },
         {
             "type": "java",
-            "name": "Launch SocialMediaGUI",
+            "name": "SocialMediaGUI",
             "request": "launch",
-            "vmArgs": "--module-path \"C:/JavaFX/javafx-sdk-17.0.14/lib\" --add-modules javafx.controls,javafx.fxml",
+            "vmArgs": "--module-path C:/JavaFX/javafx-sdk-24/lib --add-modules javafx.controls,javafx.web --add-exports javafx.graphics/com.sun.javafx.sg.prism=ALL-UNNAMED",
             "mainClass": "SocialMediaGUI",
-            "projectName": "socialmedia_b2b82db6"
+            "projectName": "SocialMedia_8c47803c"
         }
     ]
 }
