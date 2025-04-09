@@ -116,14 +116,20 @@ public class SocialMediaGUI extends Application {
 		btnClear.setOnAction(event -> postEngine.loadContent("")); 
 		btnExit.setOnAction(event -> Platform.exit());
 
+        Button btnShowMedia = new Button("Show Media");
+
+        btnShowMedia.setOnAction(event -> startMediaFeed());
+
 		HBox buttonBox = new HBox(5, btnStart, btnClear, btnExit);
+
+        HBox buttonBoxForMedia = new HBox(5, btnShowMedia);
 
 		// Create a box for the social media feeds
 		VBox postBox = new VBox(5, this.lblStatus, buttonBox, this.postFeed);
 
 		
 		// Create a box for the media feed
-		VBox mediaBox = new VBox(5, this.lblMedia, this.mediaFeed);
+		VBox mediaBox = new VBox(5, this.lblMedia, buttonBoxForMedia, this.mediaFeed);
 
 		// Add both VBoxes to the HBox (mainPane)
 		mainPane.getChildren().add(postBox);
@@ -164,6 +170,25 @@ public class SocialMediaGUI extends Application {
 		// Start the thread
 		backgroundThread.start();
 	}
+
+    /**
+     * DOES NOT PRESENTLY WORK
+     */
+    private void startMediaFeed() {
+        // Create a task 
+		Runnable task = new Runnable() {
+			public void run() {
+				Tokenizer.mostUsedTopic("hi");
+			}
+		};
+
+		// Run the task in a background thread
+		Thread backgroundThread = new Thread(task);
+		// Terminate the running thread if the application exits
+		backgroundThread.setDaemon(true);
+		// Start the thread
+		backgroundThread.start();
+    }
 
 	/**
 	 * This method will use the PostGenerator to create a list of sample posts.
