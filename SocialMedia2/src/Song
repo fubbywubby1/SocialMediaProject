@@ -1,0 +1,28 @@
+import java.io.File;
+
+public class Song extends MediaItem{
+    private String artist;
+    private File file;
+
+    public Song(String title, String description, String artist, String fileName) {
+        super(title, description);
+        this.artist = artist;
+        file = new File(fileName);
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setArtist(String newArtist) {
+        this.artist = newArtist;
+    }
+
+    public void setFile(String newFileName) {
+        this.file = new File(newFileName);
+    }
+}
