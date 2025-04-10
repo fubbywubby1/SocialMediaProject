@@ -1,3 +1,4 @@
+import java.net.URI;
 import java.net.URL;
 
 /**
@@ -16,7 +17,7 @@ public class Ad extends MediaItem {
      */
     public Ad(String title, String description, String url) {
         super(title, description);
-        this.URL = setURL(url);
+        this.URL = new URL(url);
     }
 
     /**
@@ -32,6 +33,14 @@ public class Ad extends MediaItem {
      * @param newURL is used to initialize a new url using a string input
      */
     public void setURL(String url) {
-        this.URL = new URL(url);
+        URI dummyURI = new URL(url);
+    }
+
+    /**
+     * prints the respective values of the instance variables
+     */
+    @Override
+    public String print() {
+        return super.getTitle() + super.getDescription() + URL;
     }
 }
