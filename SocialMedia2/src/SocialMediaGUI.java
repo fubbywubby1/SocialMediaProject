@@ -67,6 +67,8 @@ public class SocialMediaGUI extends Application {
 	 */
 	private static final int NUMBER_OF_MEDIA_POSTS = 4;
 
+	private String postContent = "Cool Ranch Doritos";
+
 
 	
 	/**
@@ -186,7 +188,7 @@ public class SocialMediaGUI extends Application {
         // Create a task 
 		Runnable task = new Runnable() {
 			public void run() {
-				runTaskToSimulatePosts();
+				runTaskToSimulateMedia();
 			}
 		};
 
@@ -218,6 +220,7 @@ public class SocialMediaGUI extends Application {
 		            	lblStatus.setText(status);
 		            	String content = (String) 
 		            			postEngine.executeScript("document.documentElement.outerHTML");
+						postContent = content;
 						postEngine.loadContent(content + samplePost);
 		            }
 		        });
@@ -242,22 +245,21 @@ public class SocialMediaGUI extends Application {
 					public void run() {
 						lblMedia.setText(mediaStatus);
 							String mostPopular = Tokenizer.mostUsedTopic(postContent);
-							String content = (String);
+							String content = (String) 
 							mediaEngine.executeScript("document.documentElement.outerHTML");
 							mediaEngine.loadContent(content + mostPopular + "<span style= 'font-size: x-small; '>" + " " + LocalTime.now() + ".");
 					}
 				});
 
 				Thread.sleep(2000 + (int) (Math.random() * 1000));
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}
-		
 	}
+		
+}
 	
 	/*******************************************************************/
 	
 	
-}
