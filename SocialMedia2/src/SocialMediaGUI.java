@@ -236,6 +236,7 @@ public class SocialMediaGUI extends Application {
 	}
 
 	private void runTaskToSimulateMedia() {
+		MediaCollection mediaSort = new MediaCollection();
 		for (int i = 0; i < NUMBER_OF_MEDIA_POSTS; i++) {
 			try {
 				String mediaStatus = "Getting media in thread " + Thread.currentThread().getName();
@@ -245,9 +246,10 @@ public class SocialMediaGUI extends Application {
 					public void run() {
 						lblMedia.setText(mediaStatus);
 							String mostPopular = Tokenizer.mostUsedTopic(postContent);
-							String content = (String) 
+							MediaItem popularContent = mediaSort.getMedia().get(mostPopular);
+							String content = (String)
 							mediaEngine.executeScript("document.documentElement.outerHTML");
-							mediaEngine.loadContent(content + mostPopular + "<span style= 'font-size: x-small; '>" + " " + LocalTime.now() + ".");
+							mediaEngine.loadContent(content + mostPopular + popularContent.toString() + "<span style= 'font-size: x-small; '>" + " " + LocalTime.now() + ".");
 					}
 				});
 
