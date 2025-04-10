@@ -1,4 +1,5 @@
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -60,6 +61,13 @@ public class SocialMediaGUI extends Application {
 	 * the number of posts to generate in simulation
 	 */
 	private static final int NUMBER_OF_POSTS = 12;
+
+	/**
+	 * the number of media posts available
+	 */
+	private static final int NUMBER_OF_MEDIA_POSTS = 4;
+
+
 	
 	/**
 	 * the start method of the JavaFX GUI
@@ -178,7 +186,7 @@ public class SocialMediaGUI extends Application {
         // Create a task 
 		Runnable task = new Runnable() {
 			public void run() {
-				Tokenizer.mostUsedTopic("hi");
+				runTaskToSimulatePosts();
 			}
 		};
 
@@ -222,6 +230,31 @@ public class SocialMediaGUI extends Application {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	private void runTaskToSimulateMedia() {
+		for (int i = 0; i < NUMBER_OF_MEDIA_POSTS; i++) {
+			try {
+				String mediaStatus = "Getting media in thread " + Thread.currentThread().getName();
+
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						lblMedia.setText(mediaStatus);
+							String mostPopular = Tokenizer.mostUsedTopic(postContent);
+							String content = (String);
+							mediaEngine.executeScript("document.documentElement.outerHTML");
+							mediaEngine.loadContent(content + mostPopular + "<span style= 'font-size: x-small; '>" + " " + LocalTime.now() + ".");
+					}
+				});
+
+				Thread.sleep(2000 + (int) (Math.random() * 1000));
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 	}
 	
 	/*******************************************************************/
