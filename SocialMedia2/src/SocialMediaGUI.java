@@ -182,7 +182,8 @@ public class SocialMediaGUI extends Application {
 	}
 
     /**
-     * DOES NOT PRESENTLY WORK
+     * Similarly to the startFeed method, this starts on action
+	 * and proceeds to generate the mediaFeed
      */
     private void startMediaFeed() {
         // Create a task 
@@ -235,6 +236,10 @@ public class SocialMediaGUI extends Application {
 		}
 	}
 
+	/**
+	 * This method uses a MediaCollection to take the most common content and present
+	 * the media respondent of that on the mediafeed
+	 */
 	private void runTaskToSimulateMedia() {
 		MediaCollection mediaSort = new MediaCollection();
 		for (int i = 0; i < NUMBER_OF_MEDIA_POSTS; i++) {
