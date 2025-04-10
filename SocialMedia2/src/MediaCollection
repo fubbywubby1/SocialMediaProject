@@ -1,7 +1,7 @@
 import java.util.Date;
 import java.util.HashMap;
 public class MediaCollection {
-    public HashMap<Topic, MediaItem> media = new HashMap<>();
+    private HashMap<Topic, MediaItem> media = new HashMap<>();
 
     public MediaCollection() {
         this.media.put(Topic.Bacon, new Image("Bacon", "a slice", "bacon.jpg"));
@@ -24,4 +24,9 @@ public class MediaCollection {
         this.media.put(Topic.Volkswagons, new Ad("Volkswagons", "The People's Car!", "www.Volkswagon.com"));
         this.media.put(Topic.Yachts, new Image("Yachts", "Let's go boatin!", "yacht.jpg"));
     }
+
+    public HashMap<Topic, MediaItem> getMedia() {
+        return media;
+    }
+
 }
