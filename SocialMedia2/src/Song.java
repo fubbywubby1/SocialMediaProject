@@ -1,4 +1,11 @@
+package socialmedia;
 import java.io.File;
+import java.io.IOException;
+
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
  * An extension of mediaitem, except this has
@@ -9,6 +16,7 @@ import java.io.File;
 public class Song extends MediaItem{
     private String artist;
     private File file;
+    private String fileName;
 
     /**
      * Initializes all the instance vars to the respective input
@@ -20,7 +28,8 @@ public class Song extends MediaItem{
     public Song(String title, String description, String artist, String fileName) {
         super(title, description);
         this.artist = artist;
-        file = new File(fileName);
+        file = new File("C:/Temp/SocialMedia2/socialmedia2/assets/" + fileName);
+        this.fileName = fileName;
     }
 
     /**
@@ -62,4 +71,55 @@ public class Song extends MediaItem{
     public String print() {
         return super.getTitle() + super.getDescription() + artist + file.toString();
     }
+
+    /**
+     * returns instance var fileName
+     * @return fileName
+     */
+    public String getFileName() {
+        return fileName;
+    }
+
+    /**
+     * Takes in the file, then processes the length of it
+     * @return the duration, in seconds, of the song
+     */
+    public Float getLengthOfFile() {
+        AudioFileFormat fileFormat;
+        try {
+            fileFormat = AudioSystem.getAudioFileFormat(file);
+        } catch (UnsupportedAudioFileException | IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        long audioFileLength = file.length();
+        AudioFormat format = fileFormat.getFormat();
+        int frameSize = format.getFrameSize();
+        float frameRate = format.getFrameRate();
+        float durationInSeconds = (audioFileLength / (frameSize * frameRate));
+
+        return durationInSeconds;
+    }
+
+    /**
+     * converts the instance vars to a String that is used for html
+     */
+    @Override
+    public String toHtml() {
+        if (!file.exists()) {
+            return "<p style='color:red;'>Audio file not found: " + getFileName() + "</p>";
+        }
+
+        String fullPath = file.toURI().toString();
+
+        return "<p><strong>" + getTitle() + "</strong> by " + getArtist() + "<br>" +
+            getDescription() + "</p>" +
+            "<audio controls style='width: 100%;'>" +
+            "<source src='" + fullPath + "' type='audio/wav'>" +
+            "Your browser does not support the audio element." +
+            "</audio>";
+}
+
+
+
 }
