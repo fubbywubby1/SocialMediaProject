@@ -1,3 +1,4 @@
+package socialmedia;
 import java.io.File;
 
 /**
@@ -8,6 +9,7 @@ import java.io.File;
  */
 public class Image extends MediaItem{
     private File file;
+    private String fileName;
 
     /**
      * initializes all instance vars
@@ -17,7 +19,8 @@ public class Image extends MediaItem{
      */
     public Image(String title, String description, String fileName) {
         super(title, description);
-        file = new File(fileName);
+        file = new File("C:/Temp/SocialMedia2/socialmedia2/assets/" + fileName);
+        this.fileName = fileName;
     }
 
     /**
@@ -43,4 +46,30 @@ public class Image extends MediaItem{
     public String print() {
         return super.getTitle() + super.getDescription() + file.toString();
     }
+
+    /**
+     * returns instance var fileName
+     * @return fileName
+     */
+    public String getFileName() {
+        return fileName;
+    }
+
+    /**
+     * converts the instance vars to a String that is used for html
+     */
+    @Override
+    public String toHtml() {
+        if (!file.exists()) {
+            return "<p style='color:red;'>Image not found: " + getFileName() + "</p>";
+        }
+
+        String fullPath = file.toURI().toString();
+
+        return "<p>" + getTitle() + ": " + getDescription() + "</p>" +
+            "<img src='" + fullPath + "' alt='" + getTitle() + "' style='max-width:100%;'/>";
+    }
+
+
+
 }
