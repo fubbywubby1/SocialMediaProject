@@ -1,4 +1,6 @@
+package socialmedia;
 import java.io.File;
+
 
 /**
  * An extension of MediaItem,
@@ -8,6 +10,7 @@ import java.io.File;
  */
 public class Video extends MediaItem {
     private File file;
+    private String fileName;
 
     /**
      * initializes all the instance vars to their respective inputs
@@ -17,7 +20,8 @@ public class Video extends MediaItem {
      */
     public Video(String title, String description, String fileName) {
         super(title, description);
-        file = new File(fileName);
+        file = new File("C:/Temp/SocialMedia2/socialmedia2/assets/" + fileName);
+        this.fileName = fileName;
     }
 
     /**
@@ -43,4 +47,33 @@ public class Video extends MediaItem {
     public String print() {
         return super.getTitle() + super.getDescription() + file.toString();
     }
+
+    /**
+     * returns instance var fileName
+     * @return fileName
+     */
+    public String getFileName() {
+        return fileName;
+    }
+
+    /**
+     * converts the instance vars to a String that is used for html
+     */
+    @Override
+    public String toHtml() {
+        if (!file.exists()) {
+            return "<p style='color:red;'>Video file not found: " + getFileName() + "</p>";
+        }
+
+        String fullPath = file.toURI().toString();
+
+        return "<p>" + getTitle() + ": " + getDescription() + "</p>" +
+            "<video controls style='max-width:100%;'>" +
+            "<source src='" + fullPath + "' type='video/mp4'>" +
+            "Your browser does not support the video tag." +
+            "</video>";
+    }
+
+
+
 }
