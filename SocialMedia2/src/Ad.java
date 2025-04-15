@@ -1,4 +1,4 @@
-import java.net.URI;
+package socialmedia;
 import java.net.URL;
 
 /**
@@ -15,7 +15,7 @@ public class Ad extends MediaItem {
      * @param description is initialized to instance var description
      * @param url is used to create a new object url with String as its name
      */
-    public Ad(String title, String description, String url) {
+    public Ad(String title, String description, String url) throws Exception  {
         super(title, description);
         this.URL = new URL(url);
     }
@@ -24,16 +24,8 @@ public class Ad extends MediaItem {
      * returns instance var url
      * @return url
      */
-    public URL getURL() {
+    public URL getUrl() {
         return URL;
-    }
-
-    /**
-     * sets url to a new url 
-     * @param newURL is used to initialize a new url using a string input
-     */
-    public void setURL(String url) {
-        URI dummyURI = new URL(url);
     }
 
     /**
@@ -42,5 +34,14 @@ public class Ad extends MediaItem {
     @Override
     public String print() {
         return super.getTitle() + super.getDescription() + URL;
+    }
+
+    /**
+     * converts the instance vars to a String that is used for html
+     */
+    @Override
+    public String toHtml() {
+        return "<p>" + getTitle() + ": " + getDescription() + "<br>" +
+           "<a href='" + getUrl() + "' target='_blank'>Visit Ad</a></p>";
     }
 }
