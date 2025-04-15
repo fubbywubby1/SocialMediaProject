@@ -1,6 +1,11 @@
+package socialmedia;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -241,22 +246,70 @@ public class SocialMediaGUI extends Application {
 	 * the media respondent of that on the mediafeed
 	 */
 	private void runTaskToSimulateMedia() {
-		MediaCollection mediaSort = new MediaCollection();
-		for (int i = 0; i < NUMBER_OF_MEDIA_POSTS; i++) {
-			try {
-				String mediaStatus = "Getting media in thread " + Thread.currentThread().getName();
+	final MediaCollection[] mediaSort = new MediaCollection[1];
 
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						lblMedia.setText(mediaStatus);
-							String mostPopular = Tokenizer.mostUsedTopic(postContent);
-							MediaItem popularContent = mediaSort.getMedia().get(mostPopular);
-							String content = (String)
-							mediaEngine.executeScript("document.documentElement.outerHTML");
-							mediaEngine.loadContent(content + mostPopular + popularContent.toString() + "<span style= 'font-size: x-small; '>" + " " + LocalTime.now() + ".");
+	try {
+		mediaSort[0] = new MediaCollection();
+	} catch (Exception e) {
+		e.printStackTrace();
+		Platform.runLater(() -> mediaEngine.loadContent(
+			"<p style='color:red;'>Failed to initialize media collection: " + e.getMessage() + "</p>"
+		));
+		return;
+	}
+
+	for (int i = 0; i < NUMBER_OF_MEDIA_POSTS; i++) {
+		try {
+			String mediaStatus = "Getting media in thread " + Thread.currentThread().getName();
+
+			Platform.runLater(() -> {
+				lblMedia.setText(mediaStatus);
+				String mostPopular = Tokenizer.mostUsedTopic(postContent);
+
+				try {
+					HashMap<Topic, MediaItem> mediaMap = mediaSort[0].getMedia();
+					List<MediaItem> mediaDisplay = new ArrayList<>();
+
+					for (Map.Entry<Topic, MediaItem> entry : mediaMap.entrySet()) {
+						if (entry.getKey().name().equalsIgnoreCase(mostPopular)) {
+							mediaDisplay.add(entry.getValue());
+						}
 					}
-				});
+
+					if (mediaDisplay.size() < 4) {
+						for (Map.Entry<Topic, MediaItem> entry : mediaMap.entrySet()) {
+							if (!mediaDisplay.contains(entry.getValue())) {
+								mediaDisplay.add(entry.getValue());
+							}
+							if (mediaDisplay.size() == 4) break;
+						}
+					}
+
+					if (!mediaDisplay.isEmpty()) {
+						StringBuilder content = new StringBuilder();
+						content.append("<div style='display: flex; flex-wrap: wrap; gap: 10px;'>");
+
+						for (MediaItem item : mediaDisplay) {
+							content.append("<div style='flex: 1 1 45%; border: 1px solid #ccc; padding: 5px;'>")
+								   .append(item.toHtml())
+								   .append("</div>");
+						}
+
+						content.append("</div>");
+						content.append("<span style='font-size: x-small;'> ").append(LocalTime.now()).append(".</span>");
+
+						mediaEngine.loadContent(content.toString());
+					} else {
+						mediaEngine.loadContent(
+							"<p style='color:red;'>No media found for topic: " + mostPopular + "</p>"
+						);
+					}
+				} catch (Exception e) {
+					mediaEngine.loadContent(
+						"<p style='color:red;'>Error loading media for topic " + mostPopular + ": " + e.getMessage() + "</p>"
+					);
+				}
+			});
 
 				Thread.sleep(2000 + (int) (Math.random() * 1000));
 			} catch (InterruptedException e) {
@@ -264,6 +317,11 @@ public class SocialMediaGUI extends Application {
 			}
 		}
 	}
+
+	
+	
+	
+	
 		
 }
 	
